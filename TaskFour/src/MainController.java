@@ -1,29 +1,56 @@
-import javax.naming.Name;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class MainController {
     List<City> cities;
+    Scanner sc;
 
     public MainController() {
         cities = new ArrayList<>();
+        sc = new Scanner(System.in);
     }
 
     public void runProgram() {
-        getMyConnection();
-        printConnection();
-        printCityCount();
-        printBigCities();
-        populateCityList();
-        printCitiesList();
-    }
-
-        public void printCitiesList() {
-            for (City c: cities) {
-                System.out.println(c);
+        int choice = 0;
+        while (choice != 9) {
+            showMenu();
+            getMyConnection();
+            choice = sc.nextInt();
+            switch (choice) {
+                case 1:
+                    printConnection();
+                    System.out.println("\n");
+                    break;
+                case 2:
+                    printCityCount();
+                    System.out.println("\n");
+                    break;
+                case 3:
+                    printBigCities();
+                    System.out.println("\n");
+                    break;
+                case 4:
+                    populateCityList();
+                    printCitiesList();
+                    System.out.println("\n");
+                    break;
+                case 9:
+                    exit();
+                    break;
+                default:
+                    exit();
+                    break;
             }
         }
+    }
+
+    public void printCitiesList() {
+        for (City c : cities) {
+            System.out.println(c);
+        }
+    }
 
 
     public Connection getMyConnection() {
@@ -44,6 +71,18 @@ public class MainController {
             e.printStackTrace();
         }
         return connection;
+    }
+
+    public void showMenu() {
+        System.out.println("1) Check connection");
+        System.out.println("2) Check City Count");
+        System.out.println("3) Print Cities with more than 5 Million Population");
+        System.out.println("4) Populate ArrayList with Cities");
+        System.out.println("9) Exit");
+    }
+
+    public void exit() {
+        System.out.println("Exiting ..");
     }
 
     public void printConnection() {
